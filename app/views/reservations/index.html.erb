@@ -1,2 +1,11 @@
-<h1>Reservations#index</h1>
-<p>Find me in app/views/reservations/index.html.erb</p>
+<h1>予約一覧</h1>
+<ul>
+  <% @reservations.each do |reservation| %>
+    <li>
+      <%= reservation.date.strftime("%Y-%m-%d %H:%M") %> - <%= reservation.content %> 
+      <%= link_to "編集", edit_reservation_path(reservation) %> | 
+      <%= link_to "削除", reservation_path(reservation), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+    </li>
+  <% end %>
+</ul>
+<%= link_to "新しい予約を作成", new_reservation_path %>
