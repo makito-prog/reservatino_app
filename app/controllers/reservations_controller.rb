@@ -1,6 +1,6 @@
 class ReservationsController < ApplicationController
   before_action :set_reservation, only: [:edit, :update, :destroy]
-
+  before_action :authenticate_user! # ログイン済みユーザーのみアクセス可能
   def index
     @reservations = Reservation.all
   end
@@ -11,6 +11,7 @@ class ReservationsController < ApplicationController
 
   def create
     @reservation = Reservation.new(reservation_params)
+    @reservation.user = current_user # もしログインユーザーがいる場合
   
     if @reservation.save
       redirect_to root_path, notice: "予約を作成しました。" # 保存成功時
